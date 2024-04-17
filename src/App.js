@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import SemesterSelect from './page/SemesterSelect'
+import Semester from './page/Semester'
+import Navbar from './component/Navbar';
+import Login from './page/Login';
+import Signup from './page/Signup';
+import { useDispatch } from 'react-redux';
+import { getUser } from './redux/slices/authentication';
+import { useEffect } from "react";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // Dispatch the getUser action when the component mounts
+    dispatch(getUser());
+  }, [dispatch]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/semester/:semester" element={<Semester />} />
+          <Route exact path="/" element={<SemesterSelect />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
