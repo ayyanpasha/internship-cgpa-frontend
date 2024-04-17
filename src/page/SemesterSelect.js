@@ -28,11 +28,12 @@ export default function SemesterSelect() {
                 let points = 0;
                 let credits = 0;
                 data.forEach((element) => {
-                    points += element.points;
-                    credits += element.credits;
+                    points += parseInt(element.points);
+                    credits += parseInt(element.credits);
                 });
                 const cgpa = points / credits;
-                if (credits === 0) {
+                console.log(credits);
+                if (credits !== 0) {
                     setCGPA(Number(cgpa.toFixed(2)));
                 }
             } catch (error) {
